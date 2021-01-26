@@ -124,7 +124,7 @@ int main() {
 	
 	//conwaysMapSmoothing(&empty, 2, 10);
 	
-	// --------------------------------------------- Ręczne pismo -----------------------------------------------
+	// --------------------------------------------- Ręczne pismo - potrzebny obraz zewnętrzny -----------------------------------------------
 	/*NoiseMap ashes;
 	loadBMPasNoiseMap("AshesToAshes.bmp", &ashes);
 	NoiseMap perlin1;
@@ -192,7 +192,7 @@ int main() {
 	saveNoiseToBmp("cos2.bmp",cos1);*/
 	
 	
-	//----------------------- Tekstury ------------------------------------------------------
+	//----------------------- Tekstury 2-- Stare definicje funkjcji // do poprawy ----------------------------------------------------
 	/*NoiseMap cos1 = generateCosWaveform(2048, 2048, 0.0, 0.2);
 	NoiseMap cos2 = generateCosWaveform(2048, 2048, 0.3, 0.2);
 	NoiseMap cos3 = generateCosWaveform(2048, 2048, 0.4, 0.1);
@@ -213,7 +213,7 @@ int main() {
 	mixNoiseMaps(cos1c, cos2, 0, 0, &_mixer_Sum);
 	mixNoiseMaps(cos1c, cos3, 0, 0, &_mixer_Sum);
 	saveNoiseToBmp("cosMult.bmp",cos1c);*/
-	//-------------------------- Test nadpisania kluczy
+	//-------------------------- Test nadpisania kluczy -- potrzebny obraz zewnętrzny
 	/*extern byte* hashCodes;
 	extern int hashCodeHeight;
 	extern int hashCodeWidth;
