@@ -2,8 +2,6 @@
  * 
  * 			Projekt z przedmiotu Kurs programowania w języku C 2020/21
  * 	
- * 			Autor: Wojciech Pokój, 324526
- * 	
  * 			Temat: Biblioteka generująca i manipulująca szumami 1D i 2D
  * 
  */
