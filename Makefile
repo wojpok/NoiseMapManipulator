@@ -1,15 +1,14 @@
-#Makefile projektu noiceMaps
 CC=gcc
 CFLAGS = -std=c11 -Wall -Wextra -Werror
 LFLAGS = -lm
 
-NAME = c
+NAME = example.out
 
 SRC =  main.c noiceMaps.c noiceFilters.c noiceMixers.c noiceGenerators.c
 DEPS = noiceMaps.h
-# nazwy wszystkich plikow zrodlowych
+# binary files
 OBJS = main.o noiceMaps.o noiceFilters.o noiceMixers.o noiceGenerators.o
-# nazwy wszystkich modulow
+# modules
 YOU: $(SRC) $(NAME)
 
 $(NAME): $(OBJS)
