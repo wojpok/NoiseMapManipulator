@@ -1,20 +1,16 @@
 /*
+ * 			C Course Project 20/21
  * 
- * 			Projekt z przedmiotu Kurs programowania w języku C 2020/21
- * 	
- * 			Temat: Biblioteka generująca i manipulująca szumami 1D i 2D
+ * 			Noise Map Manipulator
  * 
+ * 			Author: 324526
  */
-
-// TO DO 
-// 4) padding w BMP
 
 typedef signed long long sll;
 typedef unsigned char byte;
 
-//każdy piksel przechowuje wartości rgb 0-255 i parametr t
-//użycie dobrego kontenera dla parametru t jest kluczowe by wyniki były dobrej jakości i były odporne na skalowanie, aczkolwiek może to wpłynąć na czas wykonywania i użytą pamięć
-//w kolejności od najgorszej jakości do najlepszej: (każda wersja działa poprawnie bo parametr t jest mapowany między 0 i 255 żeby kolory można było łatwo przeliczać)
+//Choose wisely - You may want to sacriface performence in order to get higher quality
+
 //typedef byte param_t;
 typedef float param_t;
 //typedef double param_t;
@@ -22,24 +18,21 @@ typedef float param_t;
 
 typedef struct { byte b, g, r; param_t t; } color_t;
 
-//najważniejsza cecha pseudo losowych liczb w generowaniu szumów to możliwość
-//otrzymania tego samego wyniku używając tego samego ziarna
+//simple wrappers
 sll nextRandom();
 sll getCurrentSeed();
 void setRandomSeed();
 void setSeed(sll s);
 
+//Upscaling is done automatically, but larger can save some time
 void upscaleHashMap(int width, int height);
-byte* getHashPtr();
-int getHashWidth();
-int getHashHeight();
 
 #define __lerp(y1, y2, x1x2dist, x1xdist) (((y1)*((x1x2dist)-(x1xdist))+((y2)*(x1xdist)))/(x1x2dist))
 #define __max(a, b) (((a) > (b))?(a):(b))
-#define __unused_variable(x) (void)x //wyciszenie kompilatora bo pewna funkcja nie wykorzystuje wszystkich paramaetrów ale musi być zgodna ze wskaźnikiem
+#define __unused_variable(x) (void)x // _mixer_Overlay needs to be compatible with pointer but it doesnt uses all parameters
 
 typedef struct {
-	int width, height;//height = 1 oznacza szum 1D
+	int width, height;//height = 1 means 1D
 	color_t *colorMap;
 } NoiseMap;
 
@@ -47,9 +40,9 @@ color_t color(byte r, byte g, byte b, param_t t);
 byte isNoiseMapValid(NoiseMap *noiseMap);
 byte clearNoiseMap(NoiseMap *noiseMap);
 void clear(NoiseMap *nm);
-//freq scaling oznacza jak duży wpływ mają wysokie czętstotliwości
-// ok 0.7 bardzo duży - 1.8 umiarkowany - 4.0 niezauważalnie mały
-//detailsLevel inaczej ilość oktaw wykorzystanych w generowaniu - większa liczba - większa dokładność
+//-----------------------------------------[noiceGenerators.c]-----------------------------------
+// freq scaling - is the ration determining how impactful are higher frequencies
+// 0.7 - Extreamly high; 3.0 - barely noticeable
 void generatePerlinNoise1D(NoiseMap *target, int width, int hashOffsetX, int hashOffsetY, float freqScaling, int detailsLevel);
 void generatePerlinNoise2D(NoiseMap *target, int width, int height, int hashOffsetX, int hashOffsetY, float freqScaling, int detailsLevel);
 void generateWorleyNoise2D(NoiseMap *target, int width, int height, int pointsCount, int distScaling);
@@ -59,22 +52,17 @@ void copyNoiseMap(NoiseMap *target, NoiseMap *source);
 
 //-----------------------------------------[noiceFilters.c]--------------------------------------
 void castPerlinNoise1Dto2D(NoiseMap *noiseMap, int totalHeight, int level0height, int level255height);
-//liniowo mapuje color między zadanymi parametrami
 void colorizeNoiseMap(NoiseMap *noiseMap, param_t lowerParameter, param_t higherParameter, color_t col1, color_t col2);
-//liniowo mapuje parametr t między zadanymi wartościami
 void mapParamt(NoiseMap *noiseMap, param_t lowerParameter, param_t higherParameter, param_t fromParameter, param_t toParameter);
-//Funkcja zawdzięcza swoją nazwe Johnowi Conwayowi, twórcy Game of Life, która jest inspiracją dla tego algorytmu
+//inspired by Game of Life
 void conwaysMapSmoothing(NoiseMap *noiseMap, int radius, int threshold);
 //-----------------------------------------[noiceMixers.c]---------------------------------------
-
 void mixerOverlay(	NoiseMap *target, NoiseMap *source, int offsetX, int offsetY);
 void mixerMask(		NoiseMap *target, NoiseMap *source, int offsetX, int offsetY);
 void mixerAdd(		NoiseMap *target, NoiseMap *source, int offsetX, int offsetY);
 void mixerMultiply(	NoiseMap *target, NoiseMap *source, int offsetX, int offsetY);
 void mixerInverseMask(NoiseMap *target, NoiseMap *source, int offsetX, int offsetY);
 void mixerLerp(		NoiseMap *target, NoiseMap *source, int offsetX, int offsetY, float t);
-
-//ważne żeby obie mapy fromWobbly były tej samej wielkości lub większe od toWobbly
 void wobbly(NoiseMap *target, NoiseMap *sourceX, NoiseMap *sourceY);
 void perlinNoises1Dto2DPath(int width, int height, NoiseMap *noiseMap1, NoiseMap *noiseMap2);
 
@@ -83,8 +71,7 @@ typedef signed char    si1B;
 typedef signed short   si2B;
 typedef signed int     si4B;
 
-//zapis i odczyt do pliku
-void saveNoiseToBmp(const char* fileName, NoiseMap *source);
+void saveNoiseToBmp(const char* 	fileName, NoiseMap *source);
 void loadBMPasNoiseMap(const char* bmpFileIn, NoiseMap *target);
 
 #pragma pack(push, 1)

@@ -11,7 +11,5 @@ Next, you will be asked which example you want to be rendered.
 Result.bmp in main directory will contain results.
 
 # TO DO <br>
-Data padding in BMP files<br>
 Example 4 & 5<br>
-Debug upscaleHashMap()<br>
 Fix mem leaks<br>

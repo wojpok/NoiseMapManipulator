@@ -12,6 +12,8 @@ int hashCodeHeight = 0;
 void upscaleHashMap(int width, int height) {
 	if(width < 0) width = -width;
 	if(height < 0) height = - height;
+	
+	//if empty generate
 	if(hashCodes == NULL) {
 		hashCodes = malloc(height*width*sizeof(byte));
 		if(hashCodes == NULL) exit(1);
@@ -21,10 +23,9 @@ void upscaleHashMap(int width, int height) {
 		
 		hashCodeHeight = height;
 		hashCodeWidth = width;
-		printf("%d %d\n", width, height);
 		return;
 	}
-	
+	//if not - upscale
 	if(width <= hashCodeWidth && height <= hashCodeHeight) return;
 	
 	int newHeight = __max(hashCodeHeight, height);
@@ -52,7 +53,7 @@ void upscaleHashMap(int width, int height) {
 	hashCodes = newHash;
 }
 
-//wrappery na podstawowe funkcje losujące
+//Some wrappers simply not to lose seed accidentally
 static sll currentSeed;
 
 void setRandomSeed() {
@@ -70,6 +71,9 @@ sll nextRandom() {
 sll getCurrentSeed() {
 	return currentSeed;
 }
+
+//memory managment  - each function checks if pointers are proper
+//if needed it will clear the colorMap
 
 byte isNoiseMapValid(NoiseMap *noiseMap) {
 	if(noiseMap == NULL || noiseMap->colorMap == NULL
@@ -111,8 +115,6 @@ void copyNoiseMap(NoiseMap *target, NoiseMap *source) {
 	memcpy(target->colorMap, source->colorMap, target->width*target->height*sizeof(color_t));
 }
 
-
-
 void saveNoiseToBmp(const char* fileName, NoiseMap *source) {
 	if(!isNoiseMapValid(source)) return;
 	FILE * f = fopen(fileName,"wb+");
@@ -136,17 +138,17 @@ void saveNoiseToBmp(const char* fileName, NoiseMap *source) {
 	hd.biClrUsed = 0;
 	hd.biClrImportant = 0;
 
-	//int emptyBytes = 0x0;
-	//int offset = 4-nm.width%4;
+	int emptyBytes = 0x0;
+	int offset = 4-(source->width*3)%4;
+	if(offset == 4) offset = 0;
+	
 	fwrite(&hd, 54, 1, f);
 	for(int y = source->height-1; y >= 0; y--) {
 		for(int x = 0; x < source->width; x++) {
-			//printf("%d %d\n", x, y);
 			fwrite(source->colorMap+source->width*y+x, 3, 1, f);	
 		}
-		//fwrite(&emptyBytes, offset, 1, f);	
+		fwrite(&emptyBytes, offset, 1, f);	
 	}
-	//fwrite(nm.colorMap, nm.width*nm.height*4, 1, f);	
 	fclose(f);
 }
 
@@ -165,7 +167,8 @@ void loadBMPasNoiseMap(const char* bmpFileIn, NoiseMap *target) {
 	int padding = (((target->width*3)&(~3)) - (target->width*3));
 	if(padding < 0) padding += 4;
 	
-	//int offset = 4-newNM.width%4;
+	int offset = 4-(target->width*3)%4;
+	if(offset == 4) offset = 0;
 	
 	fseek( f, 54, SEEK_SET );
 	for(int y = target->height-1; y >= 0; y--){
@@ -175,7 +178,7 @@ void loadBMPasNoiseMap(const char* bmpFileIn, NoiseMap *target) {
 			target->colorMap[index].t = (target->colorMap[index].r +
 			target->colorMap[index].g + target->colorMap[index].b)/3;
 		}
-		//fseek( f, offset, 1);	
+		fseek( f, offset, 1);	
 	}
 	fclose(f);
 }

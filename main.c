@@ -5,7 +5,6 @@
 #include <math.h>
 
 int main() {
-	
 	printf("Welcome to the example usage of NoiseMapManipulator\n");
 	sll seed;
 	printf("Select RNG seed (0 = random): ");
@@ -18,7 +17,9 @@ int main() {
 		setSeed(seed);
 	}
 	
-	//pre-rendered hash map saves a lot of time
+	//pre-rendered larger hash is not necesery because perlin noise generators do this automatically when needed
+	//but if you want to achieve smooth transition beetween maps with different parameters you may want to do this
+	//You can remove this line and render terraria like terrain - difference is noticeable
 	upscaleHashMap(5000, 5000);
 	
 	int effect;
@@ -79,7 +80,7 @@ int main() {
 			NoiseMap ashes;
 			loadBMPasNoiseMap("sourceImages/AshesToAshes.bmp", &ashes);
 			
-			//generate 2 noise maps, which will be used as wobbly ource
+			//generate 2 noise maps, which will be used as wobbly source
 			NoiseMap perlin1;
 			generatePerlinNoise2D(&perlin1, 1024, 2048, 0, 0,  1.2, 10);
 			mapParamt(&perlin1, 0, 255, 100, 150);
