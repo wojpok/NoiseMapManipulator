@@ -48,8 +48,7 @@ void castPerlinNoise1Dto2D(NoiseMap* noiseMap, int totalHeight, int level0height
 	noiseMap->colorMap = newColorMap;
 }
 
-//funkcja sprawdza po kolei wszystkie piksele,
-//jeżeli parametr t piskela zanjduje się między zadanymi widełkami to jest kolorowany 
+//colorizes pixels based on param_t
 void colorizeNoiseMap(NoiseMap *noiseMap, param_t lowerParameter, param_t higherParameter, color_t col1, color_t col2) {
 	if(!isNoiseMapValid(noiseMap)) return;
 	int paramt = 0;
@@ -66,9 +65,9 @@ void colorizeNoiseMap(NoiseMap *noiseMap, param_t lowerParameter, param_t higher
 	}
 }
 
-//algorytm działa podobnie do Game of Life, zlicza wszytskich żywych sąsiadów w zadynym promieniu
-// Może nastapić śmierć z osamotnienia i ożywienie gdy zostaje przekroczony ustalony próg
-//nie występuje za to śmierć z przeludnienia, więc główny kształt nie zostaje naruszony
+//Algorithm inspired with John Conway's Game of Life
+//if dead pixel has enough neighbours around it will be reborn,
+//if not enough - it will die. However ther is no death from overcrowding 
 void conwaysMapSmoothing(NoiseMap *noiseMap, int radius, int threshold) {
 	if(!isNoiseMapValid(noiseMap)) return;
 	

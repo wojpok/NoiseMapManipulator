@@ -4,6 +4,8 @@
 #include <math.h>
 #include "noiceMaps.h"
 
+//wobbly needs sourceX and sourceY to be same size or larger than the target map
+//it takes the point value of sourceX and sourceY and calcuates the offset of pixel
 void wobbly(NoiseMap *target, NoiseMap *sourceX, NoiseMap *sourceY) {
 	if(!isNoiseMapValid(target) || !isNoiseMapValid(sourceX) || !isNoiseMapValid(sourceY) ||
 	sourceX->width < target->width || sourceX->height < target->height ||
@@ -30,9 +32,11 @@ void wobbly(NoiseMap *target, NoiseMap *sourceX, NoiseMap *sourceY) {
 	target->colorMap = newMap;
 }
 
-
+//general purpose function.
+//based on offset it prints one noiseMap onto second with different effect defined by mixers
 static void mixNoiseMaps(NoiseMap *target, NoiseMap *source, int offsetX, int offsetY, color_t (*colorMixer)(color_t col1, color_t col2)) {
 	if(!isNoiseMapValid(target) || !isNoiseMapValid(source)) return;
+	
 	int fromX = 0, toX = source->width, fromY = 0, toY=source->height;
 	if(offsetX < 0) fromX = -offsetX;
 	if(offsetY < 0) fromY = -offsetY;
@@ -92,6 +96,7 @@ static color_t _mixer_Mult(color_t col1, color_t col2) {
 	return newCol;
 }
 
+//wrappers
 void mixerOverlay(	NoiseMap *target, NoiseMap *source, int offsetX, int offsetY) {
 	mixNoiseMaps(target, source, offsetX, offsetY, &_mixer_Overlay);
 }

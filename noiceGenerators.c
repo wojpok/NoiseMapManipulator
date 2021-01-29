@@ -60,7 +60,7 @@ void generateWorleyNoise2D(NoiseMap *target, int width, int height, int pointsCo
 }
 
 void generatePerlinNoise1D(NoiseMap *target, int width, int hashOffsetX, int hashOffsetY, float freqScaling, int detailsLevel) {
-	//ustawianie postawowych danych i sanityzacja wejścia
+	//data checking
 	if(!clearNoiseMap(target)) return; 
 	target->width = width;
 	target->height = 1;
@@ -75,12 +75,12 @@ void generatePerlinNoise1D(NoiseMap *target, int width, int hashOffsetX, int has
 		log2width++;
 	int cWidth = 1<<log2width;	
 		
-	//poziom detali większy niż logarytm z szerokości kazałby wykonywać interpolacje o odstępie 0 (dzielienie przez 0)
+	//details level cannot be smaller than log2width -> aotherwise algorithm will be dividing by zero
 	if(detailsLevel > log2width) detailsLevel = log2width;
 	
 	upscaleHashMap(cWidth+hashOffsetX, hashOffsetY);
 	
-	//przydzielenie pamięci do wykonania niezbędnych obliczeń
+	//memory
 	target->colorMap = malloc(sizeof(color_t)*(width));
 	int *keys = malloc((cWidth+1)*sizeof(int));
 	float *tabl = calloc(cWidth*sizeof(float), 1);
@@ -90,21 +90,19 @@ void generatePerlinNoise1D(NoiseMap *target, int width, int hashOffsetX, int has
 		return;
 	}
 	
-	//wypełnienie kluczy losowymi wartościami
+	//keys read from hashMap
 	for(int i = 0; i <= cWidth; i++) {
 		keys[i] = hashCodes[i+hashOffsetX+hashCodeHeight*hashOffsetY];
 	}
 	
-	//właściwy algorytm
-	//scale przechowuje mnożnik dla danej częstotliwości (zmienia się co obrót pętli)
+	//scale determines the aplitude of current frequency
 	float scale = 1.0;
-	//acc przechowuje maksymalną wartość którą można osiągnąć, potrzebne do znormalizowania wyniku na końcu
+	//acc stores the max value, needed for normalization
 	float acc = 0.0;
 	
-	//iterowanie po częstotliwościach, zaczynając od 0 do detailLevel <= log2width
 	for(int freq = 0; freq < detailsLevel; freq++) {
 		int incrementation = (cWidth>>freq);
-		//liniowa interpolacja między częstotliwościami
+		//lerp beetween point
 		for(int keypoints = 0; keypoints < cWidth; keypoints+=incrementation) {	
 			int y0 = keys[keypoints], y1 = keys[keypoints+incrementation];
 		
@@ -112,26 +110,24 @@ void generatePerlinNoise1D(NoiseMap *target, int width, int hashOffsetX, int has
 				tabl[i]+=((float)( __lerp(y0, y1, incrementation, i - keypoints))/scale);
 			}
 		}
-		//aktualizacja akkumulacji i skali
 		acc += (float)255/scale;
 		scale*=freqScaling;
 	}
 	color_t temp;
 	temp.r = temp.b = temp.g = 0;
 	for(int i = 0; i < width; i++) {
-		//przeskalowanie, zamiana na postać decymalną i zapis do parametru t;
+		//rescaling
 		temp.t = (param_t)((tabl[i]/acc)*255);
 		target->colorMap[i] = temp;
 	}
-	//sprzątanie
+	//tidying
 	free(tabl); 
 	free(keys);
 }
 
-//algorytm działa analogicznie do wersji 1D, ale podwaja się ilość kroków ze względu na drugi wymiar
-//będzie zastosowana bilioniowa interpolacja
+//same as previous, but everything is extended in 2 dimensions
 void generatePerlinNoise2D(NoiseMap *target, int width, int height, int hashOffsetX, int hashOffsetY, float freqScaling, int detailsLevel) {
-	//ustawianie postawowych danych i sanityzacja wejścia
+	
 	if(!clearNoiseMap(target)) return; 
 	target->width = width;
 	target->height = height;
@@ -145,9 +141,9 @@ void generatePerlinNoise2D(NoiseMap *target, int width, int height, int hashOffs
 	if((1<<log2width) < width) 
 		log2width++;
 	int cWidth = 1<<log2width;	
-	//poziom detali większy niż logarytm z szerokości kazałby wykonywać interpolacje o odstępie 0 (dzielienie przez 0)
+	
 	if(detailsLevel > log2width) detailsLevel = log2width;
-	//analogicznie jak wyżej
+
 	int log2height = 0;
 	while(height>>log2height != 1)
 		log2height++;
@@ -161,7 +157,7 @@ void generatePerlinNoise2D(NoiseMap *target, int width, int height, int hashOffs
 	
 	upscaleHashMap(cWidth+hashOffsetX+3, cHeight+hashOffsetY+3);
 	
-	//przydzielenie pamięci do wykonania niezbędnych obliczeń
+
 	target->colorMap = malloc(sizeof(color_t)*width*height);
 	int *keys = malloc((cWidth+1)*(cHeight+1)*sizeof(int));
 	float *tabl = calloc(cWidth*cHeight*sizeof(float), 1);
@@ -171,7 +167,7 @@ void generatePerlinNoise2D(NoiseMap *target, int width, int height, int hashOffs
 		return;
 	}
 	
-	//wypełnienie kluczy losowymi wartościami
+
 	for(int y = 0; y < (cHeight+1); y++) {
 		for(int x = 0; x < (cWidth+1); x++) {
 			keys[x+cWidth*y] = hashCodes[x+hashOffsetX+hashCodeWidth*(y+hashOffsetY)];	
@@ -181,13 +177,13 @@ void generatePerlinNoise2D(NoiseMap *target, int width, int height, int hashOffs
 	float scale = 1.0;
 	float acc = 0.0;
 	
-	//iterowanie po częstotliwościach, zaczynając od 0 do detailLevel <= log2width
+
 	for(int freq = 0; freq < detailsLevel; freq++) {
 		int incrementation = (cWidth>>freq);
-		//liniowa interpolacja między częstotliwościami
+
 		for(int keypointsX = 0; keypointsX < cWidth; keypointsX+=incrementation) {	
 			for(int keypointsY = 0; keypointsY < cHeight; keypointsY+=incrementation) {	
-				//zebranie kluczy z kwadratu
+
 				int y0 = keys[keypointsX+keypointsY*cWidth], 
 					y1 = keys[keypointsX+keypointsY*cWidth+incrementation],
 				    y2 = keys[keypointsX + (keypointsY+incrementation)*cWidth], 

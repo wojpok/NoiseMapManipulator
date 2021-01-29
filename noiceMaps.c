@@ -73,6 +73,7 @@ sll getCurrentSeed() {
 }
 
 //memory managment
+//empty NoiseMap
 NoiseMap *newEmptyMap() {
 	NoiseMap *newMap = malloc(sizeof(NoiseMap));
 	newMap->width = newMap->height = 0;
@@ -93,13 +94,6 @@ byte clearNoiseMap(NoiseMap *noiseMap) {
 		return 1;
 	}
 	return 0;
-}
-
-void clear(NoiseMap *nm) {
-	if(nm == NULL) return;
-	nm->width =
-	nm->height = 0;
-	nm->colorMap = NULL;
 }
 
 color_t color(byte r, byte g, byte b, param_t t) {

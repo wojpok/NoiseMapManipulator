@@ -40,7 +40,6 @@ color_t color(byte r, byte g, byte b, param_t t);
 NoiseMap *newEmptyMap();
 byte isNoiseMapValid(NoiseMap *noiseMap);
 byte clearNoiseMap(NoiseMap *noiseMap);
-void clear(NoiseMap *nm);
 //-----------------------------------------[noiceGenerators.c]-----------------------------------
 // freq scaling - is the ration determining how impactful are higher frequencies
 // 0.7 - Extreamly high; 3.0 - barely noticeable
