@@ -72,8 +72,13 @@ sll getCurrentSeed() {
 	return currentSeed;
 }
 
-//memory managment  - each function checks if pointers are proper
-//if needed it will clear the colorMap
+//memory managment
+NoiseMap *newEmptyMap() {
+	NoiseMap *newMap = malloc(sizeof(NoiseMap));
+	newMap->width = newMap->height = 0;
+	newMap->colorMap = NULL;
+	return newMap;
+}
 
 byte isNoiseMapValid(NoiseMap *noiseMap) {
 	if(noiseMap == NULL || noiseMap->colorMap == NULL
@@ -83,8 +88,8 @@ byte isNoiseMapValid(NoiseMap *noiseMap) {
 
 byte clearNoiseMap(NoiseMap *noiseMap) {
 	if(noiseMap != NULL)  {
-		//if(noiseMap->colorMap != NULL)
-			//free(noiseMap->colorMap);
+		if(noiseMap->colorMap != NULL)
+			free(noiseMap->colorMap);
 		return 1;
 	}
 	return 0;

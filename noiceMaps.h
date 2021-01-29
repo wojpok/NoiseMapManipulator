@@ -24,7 +24,7 @@ sll getCurrentSeed();
 void setRandomSeed();
 void setSeed(sll s);
 
-//Upscaling is done automatically, but larger can save some time
+//Upscaling is done automatically, but prerendered larger can save some time and few headaches
 void upscaleHashMap(int width, int height);
 
 #define __lerp(y1, y2, x1x2dist, x1xdist) (((y1)*((x1x2dist)-(x1xdist))+((y2)*(x1xdist)))/(x1x2dist))
@@ -37,6 +37,7 @@ typedef struct {
 } NoiseMap;
 
 color_t color(byte r, byte g, byte b, param_t t);
+NoiseMap *newEmptyMap();
 byte isNoiseMapValid(NoiseMap *noiseMap);
 byte clearNoiseMap(NoiseMap *noiseMap);
 void clear(NoiseMap *nm);

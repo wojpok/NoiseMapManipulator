@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,7 +38,7 @@ static void mixNoiseMaps(NoiseMap *target, NoiseMap *source, int offsetX, int of
 	if(offsetY < 0) fromY = -offsetY;
 	if(offsetX + source->width < toX) toX = offsetX + source->width;
 	if(offsetY + source->height < toY) toY = offsetY + source->height;
-	printf("%d %d %d %d\n",fromX, toX, fromY,toY);
+
 	for(int y = fromY; y < toY; y++) {
 		for(int x = fromX; x < toX; x++) {
 			int ind = (y + offsetY) * target->width+ x + offsetX;

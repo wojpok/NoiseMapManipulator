@@ -12,4 +12,3 @@ Result.bmp in main directory will contain results.
 
 # TO DO <br>
 Example 4 & 5<br>
-Fix mem leaks<br>

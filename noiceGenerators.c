@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
@@ -49,7 +48,7 @@ void generateWorleyNoise2D(NoiseMap *target, int width, int height, int pointsCo
 			target->colorMap[y*width+x] = newCol;
 		}
 	}
-	printf("%d\n", maxVal);
+
 	for(int y = 0 ; y < height*width; y++) {
 		color_t newCol;
 		newCol.t = (param_t) __lerp(0,255,maxVal,target->colorMap[y].t);
@@ -125,7 +124,8 @@ void generatePerlinNoise1D(NoiseMap *target, int width, int hashOffsetX, int has
 		target->colorMap[i] = temp;
 	}
 	//sprzątanie
-	free(tabl); free(keys);
+	free(tabl); 
+	free(keys);
 }
 
 //algorytm działa analogicznie do wersji 1D, ale podwaja się ilość kroków ze względu na drugi wymiar
@@ -157,9 +157,7 @@ void generatePerlinNoise2D(NoiseMap *target, int width, int height, int hashOffs
 		
 	if(cHeight < cWidth) {cHeight = cWidth;}
 	
-	//if(detailsLevel > log2height) detailsLevel = log2height;
-	
-	printf("%d %d\n", cWidth, cHeight);
+	if(detailsLevel > log2height) detailsLevel = log2height;
 	
 	upscaleHashMap(cWidth+hashOffsetX+3, cHeight+hashOffsetY+3);
 	
@@ -176,9 +174,7 @@ void generatePerlinNoise2D(NoiseMap *target, int width, int height, int hashOffs
 	//wypełnienie kluczy losowymi wartościami
 	for(int y = 0; y < (cHeight+1); y++) {
 		for(int x = 0; x < (cWidth+1); x++) {
-			keys[x+cWidth*y] = hashCodes[x+hashOffsetX+hashCodeWidth*(y+hashOffsetY)]
-				/*nextRandom()%255*/;
-			
+			keys[x+cWidth*y] = hashCodes[x+hashOffsetX+hashCodeWidth*(y+hashOffsetY)];	
 		}
 	}
 
@@ -218,9 +214,12 @@ void generatePerlinNoise2D(NoiseMap *target, int width, int height, int hashOffs
 			target->colorMap[y*width+x] = temp;
 		}
 	}
-	//free(tabl); free(keys);
+	//I really dont know why is that but apparently uncommenting this crashes everything
+	//free(tabl); 
+	//free(keys);
 }
 
+//Simple cos map
 void generateCosWaveform(NoiseMap *target, int width, int height, float xScale, float yScale) {
 	if(!clearNoiseMap(target)) return;
 	target->width = width;
