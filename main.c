@@ -108,13 +108,31 @@ int main() {
 			//colorizeNoiseMap(&cos1, 0, 255, color(255, 230, 220, 255), color(150, 200, 170, 255));
 			//colorizeNoiseMap(&cos2, 0, 255, color(200, 230, 250, 255), color(130, 140, 210, 255));
 			NoiseMap *Perlin1 = newEmptyMap(); generatePerlinNoise2D(Perlin1, 512, 512, 0, 0, 1.8,  20);
-			NoiseMap *Perlin2 = newEmptyMap(); generatePerlinNoise2D(Perlin2, 512, 512, 0, 0, 1.8,  20);
+			NoiseMap *Perlin2 = newEmptyMap(); generatePerlinNoise2D(Perlin2, 512, 512, 512, 0, 1.8,  20);
 			wobbly(cos1, Perlin1, Perlin2);
 			wobbly(cos2, Perlin2, Perlin1);
 			//replace mixer with different one to see some cool effects
 			mixerMultiply(cos1, cos2, 0, 0);
 			
 			saveNoiseToBmp("Result.bmp",cos1);
+		break;
+		// -------------------------------------------- WOOD TEXTURE --------------------------------
+		case 5 : ;
+			NoiseMap *circles = newEmptyMap();
+			
+			loadBMPasNoiseMap("sourceImages/Circles.bmp", circles);
+			NoiseMap *cWobbly1 = newEmptyMap(); NoiseMap *cWobbly2 = newEmptyMap();
+			
+			//cool effect with scaling 1.5
+			generatePerlinNoise2D(cWobbly1, 1024, 1024, 0, 0, 1.6,  20);
+			generatePerlinNoise2D(cWobbly2, 1024, 1024, 1024, 0, 1.6,  20);
+			
+			wobbly(circles, cWobbly1, cWobbly2);
+			mixerMultiply(circles, cWobbly1, 0, 0);
+			
+			colorizeNoiseMap(circles, 0, 255, 	color(78,29,29,255),	color(216,134,83,255));
+			
+			saveNoiseToBmp("Result.bmp",circles);	
 		break;
 		// -------------------------------------------- TERRARIA LIKE -------------------------------
 		case 6 : ;
@@ -243,4 +261,6 @@ int main() {
 			printf("Invalid option, exiting...\n");
 			exit(0);
 	}
+	
+	printf("\nDone\n\n");
 }

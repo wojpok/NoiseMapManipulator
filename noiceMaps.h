@@ -42,7 +42,7 @@ byte isNoiseMapValid(NoiseMap *noiseMap);
 byte clearNoiseMap(NoiseMap *noiseMap);
 //-----------------------------------------[noiceGenerators.c]-----------------------------------
 // freq scaling - is the ration determining how impactful are higher frequencies
-// 0.7 - Extreamly high; 3.0 - barely noticeable
+// 0.7 - very impactful; 3.0 - barely noticeable
 void generatePerlinNoise1D(NoiseMap *target, int width, int hashOffsetX, int hashOffsetY, float freqScaling, int detailsLevel);
 void generatePerlinNoise2D(NoiseMap *target, int width, int height, int hashOffsetX, int hashOffsetY, float freqScaling, int detailsLevel);
 void generateWorleyNoise2D(NoiseMap *target, int width, int height, int pointsCount, int distScaling);
