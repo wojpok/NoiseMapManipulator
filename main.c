@@ -24,7 +24,7 @@ int main() {
 	
 	int effect;
 	
-	printf("Choose an example to render:\n ");
+	printf("Choose an example to render:\n");
 	printf("1) Old Sea Map\n");
 	printf("2) Height Map\n");
 	printf("3) Hand Writing simulation (from source image)\n");
@@ -103,17 +103,18 @@ int main() {
 		// -------------------------------------------- ROCK TEXTURE --------------------------------
 		case 4 : ;
 		
-			/*NoiseMap cos1 = generateCosWaveform(512, 512, 0.19, 0.09);
-			NoiseMap cos2 = generateCosWaveform(512, 512, 0.2, 0.1);
-			colorizeNoiseMap(&cos1, 0, 255, color(255, 230, 220, 255), color(150, 200, 170, 255));
-			colorizeNoiseMap(&cos2, 0, 255, color(200, 230, 250, 255), color(130, 140, 210, 255));
-			NoiseMap Perlin1 = generatePerlinNoise2D(512, 512, 0, 0, 1.8,  20);
-			NoiseMap Perlin2 = generatePerlinNoise2D(512, 512, 0, 0, 1.8,  20);
-			wobbly(&cos1, Perlin1, Perlin2);
-			wobbly(&cos2, Perlin2, Perlin1);
-			mixNoiseMaps(cos1, cos2, 0, 0, &_mixer_Add);
+			NoiseMap *cos1 = newEmptyMap(); generateCosWaveform(cos1, 512, 512, 0.19, 0.09);
+			NoiseMap *cos2 = newEmptyMap(); generateCosWaveform(cos2, 512, 512, 0.2, 0.1);
+			//colorizeNoiseMap(&cos1, 0, 255, color(255, 230, 220, 255), color(150, 200, 170, 255));
+			//colorizeNoiseMap(&cos2, 0, 255, color(200, 230, 250, 255), color(130, 140, 210, 255));
+			NoiseMap *Perlin1 = newEmptyMap(); generatePerlinNoise2D(Perlin1, 512, 512, 0, 0, 1.8,  20);
+			NoiseMap *Perlin2 = newEmptyMap(); generatePerlinNoise2D(Perlin2, 512, 512, 0, 0, 1.8,  20);
+			wobbly(cos1, Perlin1, Perlin2);
+			wobbly(cos2, Perlin2, Perlin1);
+			//replace mixer with different one to see some cool effects
+			mixerMultiply(cos1, cos2, 0, 0);
 			
-			saveNoiseToBmp("Result.bmp",cos1);*/
+			saveNoiseToBmp("Result.bmp",cos1);
 		break;
 		// -------------------------------------------- TERRARIA LIKE -------------------------------
 		case 6 : ;
