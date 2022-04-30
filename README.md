@@ -1,10 +1,10 @@
 # Noise Map Manipulator
 
-Whether you aim to create natural looking terrain, add details to pale texture or embed dynamic sky in you game, you hardly ever do it by hand. So called noise maps (for instance Perlin Noice) with proper usage can generate well suited elements. For this reason I decided to challange myself and create this library equipped with functionality required to generate noise maps and manipulate to achieve various effects. 
+Whether you aim to create natural looking terrain, add details to a pale texture or embed dynamic sky in you game, you hardly ever do it by hand. Noise maps (for instance Perlin Noice) with proper usage can automate the generation of chosen elements. For this reason I decided to challenge myself and create this library equipped with functionality required to generate noise maps and manipulate them to achieve various effects. 
 
 ## Examples
 
-API delievered by this library is capable of creating such images:
+This library can be used in e. g. situations given below:
 (All of those images can be generated with code included in ```main.c```)
 
 ### Treasure Map
@@ -25,12 +25,12 @@ API delievered by this library is capable of creating such images:
 
 ## Usage
 
-Using ```make``` you can easily compile entire library as well as example program. Included example program can be run with command ```./exmaple.out```. You will be prompted with RNG seed input field and then with example image you would like to generate.
+Using ```make``` you can easily compile entire library as well as an example program. The example program included in the repository can be run with the command ```./exmaple.out```. You will be prompted with RNG seed input field and with an example image you would generate.
 
 ## Documentation
 
 ``` TODO ```
 
-You can study examples included to undestand what's going on. One important thing: Every pixel in the NoiseMap consists of 4 parameters: 3 color bytes (RGB) and parameter T. Parameter T is not an alpha channel, it is distinct value used to help mapping values on the NoiseMap and coloring pixels.
+You can study examples included to undestand what's going on. One important thing: Every pixel in the NoiseMap consists of 4 parameters: 3 color bytes (RGB) and parameter T. Parameter T is not an alpha channel. It is a distinct value used to help with mapping values on the NoiseMap and coloring pixels.
 
 
