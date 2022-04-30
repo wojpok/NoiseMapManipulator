@@ -9,18 +9,18 @@ API delievered by this library is capable of creating such images:
 
 ### Treasure Map
 
-[Treasure Map](https://i.imgur.com/LyL6sTo.png)
+![Treasure Map](https://i.imgur.com/LyL6sTo.png)
 
 ### Height Map
 
-[Treasure Map](https://i.imgur.com/w42Ibx0.png)
+![Treasure Map](https://i.imgur.com/w42Ibx0.png)
 
 ### Funky Texture
 
-[Treasure Map](https://i.imgur.com/hmyPAJm.png)
+![Treasure Map](https://i.imgur.com/hmyPAJm.png)
 
 ### Example 2D Game Map
 
-[Treasure Map](https://i.imgur.com/JA3j4K8.png)
+![Treasure Map](https://i.imgur.com/JA3j4K8.png)
 
 
