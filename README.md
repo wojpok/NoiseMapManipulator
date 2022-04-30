@@ -23,4 +23,14 @@ API delievered by this library is capable of creating such images:
 
 [Treasure Map](https://i.imgur.com/JA3j4K8.png)
 
+## Usage
+
+Using ```make``` you can easily compile entire library as well as example program. Included example program can be run with command ```./exmaple.out```. You will be prompted with RNG seed input field and then with example image you would like to generate.
+
+## Documentation
+
+``` TODO ```
+
+You can study examples included to undestand what's going on. One important thing: Every pixel in the NoiseMap consists of 4 parameters: 3 color bytes (RGB) and parameter T. Parameter T is not an alpha channel, it is distinct value used to help mapping values on the NoiseMap and coloring pixels.
+
 
