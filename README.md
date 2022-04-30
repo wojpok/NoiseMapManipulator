@@ -1,13 +1,26 @@
-# NoiseMapManipulator
+# Noise Map Manipulator
 
-Example usage in main.c
+Whether you aim to create natural looking terrain, add details to pale texture or embed dynamic sky in you game, you hardly ever do it by hand. So called noise maps (for instance Perlin Noice) with proper usage can generate well suited elements. For this reason I decided to challange myself and create this library equipped with functionality required to generate noise maps and manipulate to achieve various effects. 
 
-Compile with ```make``` <br>
+## Examples
 
-Run compiled example with ```./example.out``` <br>
+API delievered by this library is capable of creating such images:
+(All of those images can be generated with code included in ```main.c```)
 
-You will be promted whether you want to use random seed or use the seed of choice.
-Next, you will be asked which example you want to be rendered.
-Result.bmp in main directory will contain results. <br>
+### Treasure Map
 
-I highly suggest reverse engineering main.c in order to understand how it works.
+[Treasure Map](sourceImages/Result1.bmp)
+
+### Height Map
+
+[Treasure Map](sourceImages/Result2.bmp)
+
+### Funky Texture
+
+[Treasure Map](sourceImages/Result4.bmp)
+
+### Example 2D Game Map
+
+[Treasure Map](sourceImages/Result6.bmp)
+
+

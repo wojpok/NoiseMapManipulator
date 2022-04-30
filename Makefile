@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS = -std=c11 -Wall -Wextra -Werror
+CFLAGS = -std=c11 -Wall -Wextra -Werror -Wno-implicit-fallthrough
 LFLAGS = -lm
 
 NAME = example.out

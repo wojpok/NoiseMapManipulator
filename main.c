@@ -59,7 +59,7 @@ int main() {
 			//join 2 maps
 			mixerInverseMask(colors, main, 0, 0);
 			
-			saveNoiseToBmp("Result.bmp", colors);
+			saveNoiseToBmp("Result1.bmp", colors);
 		break;
 		// -------------------------------------------  HEIGHT MAP ----------------------------------
 		case 2 : ;
@@ -73,7 +73,7 @@ int main() {
 			colorizeNoiseMap(Perlin,  180, 200, color(254,201,135,255),	color(254,201,135,255));
 			colorizeNoiseMap(Perlin,  200, 255, color(242,150,61,255),	color(242,150,61,255));
 			
-			saveNoiseToBmp("Result.bmp", Perlin);
+			saveNoiseToBmp("Result2.bmp", Perlin);
 		break;
 		// -------------------------------------------- HAND WRITING -------------------------------
 		case 3 : ;
@@ -97,7 +97,7 @@ int main() {
 			//colorize
 			colorizeNoiseMap(ashes, 0, 255, color(255,255,255,255),  color(0,0,0,0));
 			
-			saveNoiseToBmp("Result.bmp", ashes);
+			saveNoiseToBmp("Result3.bmp", ashes);
 			
 		break;
 		// -------------------------------------------- ROCK TEXTURE --------------------------------
@@ -114,7 +114,7 @@ int main() {
 			//replace mixer with different one to see some cool effects
 			mixerMultiply(cos1, cos2, 0, 0);
 			
-			saveNoiseToBmp("Result.bmp",cos1);
+			saveNoiseToBmp("Result4.bmp",cos1);
 		break;
 		// -------------------------------------------- WOOD TEXTURE --------------------------------
 		case 5 : ;
@@ -132,7 +132,7 @@ int main() {
 			
 			colorizeNoiseMap(circles, 0, 255, 	color(78,29,29,255),	color(216,134,83,255));
 			
-			saveNoiseToBmp("Result.bmp",circles);	
+			saveNoiseToBmp("Result5.bmp",circles);	
 		break;
 		// -------------------------------------------- TERRARIA LIKE -------------------------------
 		case 6 : ;
@@ -255,7 +255,7 @@ int main() {
 			mixerInverseMask(undegroundbiomes, Hell2, 0, 468);
 			mixerInverseMask(undegroundbiomes, Hell3, 0, 492);
 			
-			saveNoiseToBmp("Result.bmp", undegroundbiomes);
+			saveNoiseToBmp("Result6.bmp", undegroundbiomes);
 		break;
 		default :
 			printf("Invalid option, exiting...\n");
